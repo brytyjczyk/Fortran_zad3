@@ -1,4 +1,4 @@
-interface trapezoid2
+!interface trapezoid2
 
     function trapezoid_integration(ibeg, iend, myfun, p)  result (value)
       implicit none
@@ -16,16 +16,16 @@ interface trapezoid2
       real(kind = 8) :: a
       real(kind = 8) :: b
 
-      x = (iedn - ibeg)/p
+      x = (iend - ibeg)/p
       value = 0
 
       do i = 0, p
-         a = x*i
-         b = a + x
+         a = myfun(x*i)
+         b = myfun(x*i + x)
          value = value + (a+b) * x/2
-      enddo
+      end do
 
     end function trapezoid_integration
     
- end interface trapezoid2
- 
+! end interface trapezoid2
+!https://stackoverflow.com/questions/12181888/fortran-passing-functions-as-arguments-in-other-functions 

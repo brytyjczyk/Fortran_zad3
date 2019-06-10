@@ -1,5 +1,6 @@
-interface
-    function integrate  ( ibeg ,  iend , myfun , p)    result ( value )
+ ! interface
+     
+    function integrate(ibeg ,  iend , myfun , p)    result (value)
         implicit  none
       
         real(kind = 8), intent(in) ::  ibeg
@@ -24,5 +25,7 @@ interface
            value = value +  x*y
         end do
         
-    end function integrate
-end  interface
+      end function integrate
+      
+ !  end interface
+   
