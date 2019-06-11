@@ -5,7 +5,7 @@
       
         real(kind = 8), intent(in) ::  ibeg
         real(kind = 8), intent(in) ::  iend
-        procedure (fun_int) ::  myfun
+        procedure (fun_int), pointer ::  myfun
         integer(kind = 4),intent(in) ::  p
         
         real(kind = 8) ::  value = 0
