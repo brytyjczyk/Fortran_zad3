@@ -1,7 +1,7 @@
 program main
   implicit none
   
-  interface integration
+  interface func
    function quadratic_integration(ibeg ,  iend , myfun , p)    result (value)
    
         real(kind = 8), intent(in) ::  ibeg
@@ -46,7 +46,7 @@ program main
       real(kind = 8), intent (in) :: x
       real(kind = 8) :: y
     end function fa5x5
- end interface integration
+ end interface func
 
   
    integer(kind = 4) :: p = 10
@@ -59,11 +59,14 @@ program main
   write(10, *) "Trapezoid Integration"
   write(10, *) "Function sin(x)"
   write(10, *) "Parameters: ibeg = 0, iend = 2, p=10"
-  f = &trapezoid_integration(ibeg, iend, @fsin, p)
-  write(10, *) &trapezoid_integration(ibeg, iend, @fsin, p)
 
-    f = CALL trapezoid_integration(ibeg, iend, @fsin, p)
-  write(10, *) CALL trapezoid_integration(ibeg, iend, @fsin, p)
+  procedure (func), pointer :: f_ptr = null()
+  f_ptr=> fsin
+  f = & trapezoid_integration(ibeg, iend, f_ptr, p)
+  write(10, *) 'result',  &trapezoid_integration(ibeg, iend, f_ptr, p)
+
+    f = trapezoid_integration(ibeg, iend, f_ptr, p)
+  write(10, *) f
 !  write(10, *) "Parameters: ibeg = 0, iend = 2, p=100"
 !  f = call trapezoid_integration(ibeg, iend, @fsin, 10*p)
 !  write(10, *) f
@@ -188,7 +191,7 @@ end program main
       y = a * x^1 + a * x^2 + a * x^3
     end function fa3x3
 
-    function fa5x5 result (y)
+    function fa5x5(x) result (y)
       real(kind = 8), intent (in) :: x
       real(kind = 8) :: y
       real(kind = 8), parameter :: a = 5.67
